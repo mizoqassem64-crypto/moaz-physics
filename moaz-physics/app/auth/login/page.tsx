@@ -34,7 +34,13 @@ export default function LoginPage() {
       if (res.ok) {
         toast({ title: "Welcome back!", description: "Login successful" });
         localStorage.setItem("token", data.token);
-        router.push("/user/dashboard");
+        
+        // التحقق من الرتبة (Role) والتحويل للمكان الصحيح
+        if (data.user && data.user.role === 'ADMIN') {
+          window.location.href = "/admin/dashboard";
+        } else {
+          window.location.href = "/user/dashboard";
+        }
       } else {
         toast({ 
           title: "Error", 
