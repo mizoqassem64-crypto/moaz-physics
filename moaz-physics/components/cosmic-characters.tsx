@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { Sparkles, Rocket, Globe, Atom2 } from "lucide-react";
+import { Sparkles, Rocket, Globe, Atom } from "lucide-react";
 
 const characters = [
   {
@@ -17,7 +17,7 @@ const characters = [
     name: "Quantum Quark",
     role: "Quantum Companion",
     image: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=400&h=400&fit=crop",
-    icon: <Atom2 className="w-6 h-6" />,
+    icon: <Atom className="w-6 h-6" />,
     color: "from-neon-purple to-pink-400",
     description: "Explains superposition and entanglement",
   },
