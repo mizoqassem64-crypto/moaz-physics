@@ -34,9 +34,11 @@ export default function LoginPage() {
       if (res.ok) {
         toast({ title: "Welcome back!", description: "Login successful" });
         
-        // حفظ التوكن
+        // حفظ التوكن في المتصفح وفي الـ Cookies عشان الـ Middleware يقدر يقرأه
         if (data.token) {
           localStorage.setItem("token", data.token);
+          // السطر السحري اللي هيحل المشكلة:
+          document.cookie = `token=${data.token}; path=/; max-age=604800`;
         }
 
         // --- تعديل هندسي ذكي للتوجيه ---
