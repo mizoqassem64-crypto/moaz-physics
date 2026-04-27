@@ -33,14 +33,29 @@ export default function LoginPage() {
 
       if (res.ok) {
         toast({ title: "Welcome back!", description: "Login successful" });
-        localStorage.setItem("token", data.token);
         
-        // التحقق من الرتبة (Role) والتحويل للمكان الصحيح
-        if (data.user && data.user.role === 'ADMIN') {
+        // حفظ التوكن
+        if (data.token) {
+          localStorage.setItem("token", data.token);
+        }
+
+        // --- تعديل هندسي ذكي للتوجيه ---
+        // أولاً: لو الإيميل هو إيميلك الشخصي، ابعته للأدمن فوراً (Force Entry)
+        if (email === "mizoqassem64@gmail.com") {
+          window.location.href = "/admin/dashboard";
+          return;
+        }
+
+        // ثانياً: لو البيانات فيها Role بشكل صريح
+        const userRole = data.user?.role || data.role; 
+        
+        if (userRole === 'ADMIN') {
           window.location.href = "/admin/dashboard";
         } else {
-          window.location.href = "/user/dashboard";
+          // لو طالب عادي يروح للرئيسية بدل الداشبورد المعلقة
+          window.location.href = "/";
         }
+
       } else {
         toast({ 
           title: "Error", 
@@ -48,7 +63,8 @@ export default function LoginPage() {
           variant: "destructive" 
         });
       }
-    } catch {
+    } catch (err) {
+      console.error("Login Error:", err);
       toast({ 
         title: "Error", 
         description: "Something went wrong",
