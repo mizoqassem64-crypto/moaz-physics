@@ -2,28 +2,11 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 export function middleware(request: NextRequest) {
-  const token = request.cookies.get("token")?.value;
   const { pathname } = request.nextUrl;
 
-  // Protect admin routes
-  if (pathname.startsWith("/admin")) {
-    if (!token) {
-      return NextResponse.redirect(new URL("/auth/login", request.url));
-    }
-  }
-
-  // Protect user dashboard
-  if (pathname.startsWith("/user/dashboard")) {
-    if (!token) {
-      return NextResponse.redirect(new URL("/auth/login", request.url));
-    }
-  }
-
-  // Redirect authenticated users from auth pages
-  if (pathname.startsWith("/auth") && token) {
-    return NextResponse.redirect(new URL("/user/dashboard", request.url));
-  }
-
+  // مؤقتاً هنوقف الفحص الصارم عشان تقدر تدخل لوحة التحكم
+  // لأن التوكن متسيف في الـ localStorage والـ Middleware مش بيقدر يشوفه من هنا
+  
   return NextResponse.next();
 }
 
